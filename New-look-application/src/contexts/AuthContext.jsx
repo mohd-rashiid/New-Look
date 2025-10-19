@@ -23,8 +23,6 @@ export function AuthProvider({ children }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  console.log(currentUser);
-
   const signup = async (email, password, userData) => {
     try {
       // Step 1: Create user in Firebase Auth

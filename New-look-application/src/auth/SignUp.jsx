@@ -48,14 +48,10 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm({
     resolver: yupResolver(registerSchema),
   });
-
-  console.log(errors);
-  console.log(error);
-  console.log(isSubmitting);
 
   const getHandleErrors = (error) => {
     switch (error.message) {

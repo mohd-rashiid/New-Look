@@ -26,12 +26,7 @@ function ProdCard({ allProducts }) {
       <Grid container spacing={isMobile ? 3 : 0}>
         {allProducts?.map((product) => (
           <Grid
-            pl={isMobile && 0.5}
-            item
-            xs={2}
-            sm={6}
-            md={2}
-            lg={2}
+            pl={isMobile ? 0.5 : 0}
             key={product.id}
             display="flex"
             alignItems="center"

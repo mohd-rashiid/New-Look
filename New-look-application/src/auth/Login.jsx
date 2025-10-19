@@ -47,9 +47,6 @@ export default function LoginPage() {
     resolver: yupResolver(loginSchema),
   });
 
-  console.log(errors);
-  console.log(error);
-
   const getErrorMessage = (error) => {
     if (!error?.code) return "Something went wrong. Please try again.";
 
@@ -69,7 +66,6 @@ export default function LoginPage() {
   };
 
   const onSubmit = async (data) => {
-    console.log("data =>", data);
     try {
       setError("");
       await login(data.email, data.password);

@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   CardMedia,
   Link,
   Stack,
@@ -211,8 +212,8 @@ function Header() {
 
               {/* Right side icons */}
               <Stack direction="row" spacing={3} alignItems="center">
-                {headerIcons?.map((image) => (
-                  <Stack spacing={2}>
+                {headerIcons?.map((image, k) => (
+                  <Stack spacing={2} key={k}>
                     {image?.isLink ? (
                       <Link
                         href="/profile"
@@ -265,8 +266,8 @@ function Header() {
                 gap: 5,
               }}
             >
-              {subHeaderData?.map((name) => (
-                <>
+              {subHeaderData?.map((name, k) => (
+                <Box key={k}>
                   <Typography
                     color="#3C3C3C"
                     fontSize={16}
@@ -284,7 +285,7 @@ function Header() {
                       }}
                     />
                   </Typography>
-                </>
+                </Box>
               ))}
               <Stack>
                 <CardMedia

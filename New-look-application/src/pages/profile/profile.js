@@ -32,7 +32,6 @@ const ProfileSection = () => {
     navigate("/products");
   };
 
-  console.log(userData);
   const convertFirestoreTimestamp = (timestamp) => {
     if (
       !timestamp ||

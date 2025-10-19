@@ -34,7 +34,6 @@ const ProductGrid = () => {
       const matches = allProducts?.filter((product) =>
         product?.title?.toLowerCase().includes(search.toLowerCase())
       );
-      console.log(matches);
 
       setFilteredProducts(matches);
     } else {
@@ -48,7 +47,6 @@ const ProductGrid = () => {
           ?.toLowerCase()
           .includes(selectedCategory.toLowerCase())
       );
-      console.log(matches);
 
       setFilteredProducts(matches);
     } else {
@@ -60,8 +58,6 @@ const ProductGrid = () => {
     const value = event?.target?.value;
     setSearch(value);
   };
-  console.log("search =>", search);
-  console.log(filteredProducts);
 
   useEffect(() => {
     // Fetch data when the component mounts

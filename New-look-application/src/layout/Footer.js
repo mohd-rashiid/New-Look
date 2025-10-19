@@ -141,7 +141,7 @@ const Footer = () => {
       >
         <Grid container spacing={isMobile ? 4 : 25}>
           {footerData.map((section, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
+            <Grid key={index}>
               <Typography
                 fontSize={section.is_be_social ? 32 : isMobile ? 16 : 24}
                 gutterBottom
@@ -169,6 +169,7 @@ const Footer = () => {
                 <Box sx={{ mt: 1, display: "flex", alignItems: "center" }}>
                   {section.icons.map((Icon, i) => (
                     <CardMedia
+                      key={i}
                       component="img"
                       src={Icon}
                       height={24}
@@ -249,7 +250,7 @@ const Footer = () => {
           direction="row"
           alignItems="center"
           justifyContent="center"
-          pt={isMobile && 1}
+          pt={isMobile ? 1 : 0}
         >
           <CardMedia
             component="img"
