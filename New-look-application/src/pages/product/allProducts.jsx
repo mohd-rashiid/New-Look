@@ -11,7 +11,7 @@ function Products() {
       direction={isMobile ? "column" : "row"}
       // alignItems="center"
       spacing={0}
-      mt={25}
+      mt={isMobile ? 20 : 25}
     >
       {!isMobile && (
         <Grid width="25%">

@@ -101,6 +101,7 @@ export default function LoginPage() {
             height: "100%",
             display: "flex",
             alignItems: "center",
+            px: isMobile && 3,
             justifyContent: "center",
           }}
         >
@@ -203,10 +204,11 @@ export default function LoginPage() {
                   bgcolor: "black",
                   fontWeight: "bold",
                   textTransform: "none",
+                  borderRadius: 0,
                   "&:hover": { bgcolor: "#333" },
                 }}
               >
-                {isSubmitting ? "loading" : "Login In"}
+                {isSubmitting ? "loading" : "LogIn"}
               </Button>
             </Stack>
 
@@ -255,27 +257,29 @@ export default function LoginPage() {
         </Box>
 
         {/* RIGHT IMAGE SECTION - Exactly 50% */}
-        <Box
-          sx={{
-            width: isMobile ? "100%" : "50%",
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            // overflow: "hidden",
-          }}
-        >
-          <img
-            src={character1}
-            alt="Character"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "fill",
+        {!isMobile && (
+          <Box
+            sx={{
+              width: isMobile ? "100%" : "50%",
+              height: "100vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#fff",
+              // overflow: "hidden",
             }}
-          />
-        </Box>
+          >
+            <img
+              src={character1}
+              alt="Character"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "fill",
+              }}
+            />
+          </Box>
+        )}
       </Stack>
     </Box>
   );

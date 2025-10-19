@@ -141,12 +141,28 @@ function Header() {
               <Stack direction="row" spacing={2} alignItems="center">
                 {headerIcons?.map((image) => (
                   <Stack spacing={2}>
-                    <CardMedia
-                      component="img"
-                      src={image?.image}
-                      height={25}
-                      width={25}
-                    />
+                    {image?.isLink ? (
+                      <Link
+                        href="/profile"
+                        sx={{
+                          cursor: "pointer",
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          src={image?.image}
+                          height={25}
+                          width={25}
+                        />
+                      </Link>
+                    ) : (
+                      <CardMedia
+                        component="img"
+                        src={image?.image}
+                        height={25}
+                        width={25}
+                      />
+                    )}
                   </Stack>
                 ))}
               </Stack>

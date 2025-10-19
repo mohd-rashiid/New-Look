@@ -133,13 +133,18 @@ const ProductGrid = () => {
     <Box sx={{ minHeight: "", width: "100%", p: 0 }}>
       {/* Header */}
 
-      <Stack direction="row" alignItems="center" spacing={2}>
+      <Stack
+        direction={isMobile ? "column" : "row"}
+        alignItems="center"
+        spacing={2}
+        px={isMobile && 2}
+      >
         <TextField
           placeholder="Search Product Here.."
           variant="outlined"
           onChange={(event) => handleChangeSearchValue(event)}
           sx={{
-            width: "25%",
+            width: isMobile ? "100%" : "25%",
             "& .MuiInputBase-input": {
               height: "30px", // controls input height
               padding: "6px 12px", // vertical and horizontal padding
@@ -156,7 +161,7 @@ const ProductGrid = () => {
           sx={{
             "& .MuiOutlinedInput-root": {
               height: 43,
-              width: 250,
+              minWidth: isMobile ? "355px" : 250,
               borderRadius: 2,
               "& fieldset": {
                 borderColor: "#ccc",
@@ -218,11 +223,13 @@ const ProductGrid = () => {
       {productLoading ? (
         loadingComp
       ) : (
-        <ProdCard
-          allProducts={
-            search || selectedCategory ? filteredProducts : allProducts
-          }
-        />
+        <Stack pl={isMobile && 3}>
+          <ProdCard
+            allProducts={
+              search || selectedCategory ? filteredProducts : allProducts
+            }
+          />
+        </Stack>
       )}
     </Box>
   );

@@ -112,7 +112,15 @@ export default function ProductSinglePage() {
   // const price = singleProduct?.price;
   console.log(singleProduct);
   return (
-    <Box sx={{ bgcolor: "", minHeight: "100vh", py: 0, mt: 25, px: 0 }}>
+    <Box
+      sx={{
+        bgcolor: "",
+        minHeight: "100vh",
+        py: 0,
+        mt: isMobile ? 21 : 25,
+        px: 0,
+      }}
+    >
       <Container maxWidth="xl">
         {/* Breadcrumbs */}
         <Breadcrumbs
@@ -149,8 +157,12 @@ export default function ProductSinglePage() {
           </Typography>
         </Breadcrumbs>
         {/* Main Grid - Image section is larger */}
-        <Stack direction="row" alignItems="center" justifyContent="center">
-          <Stack pl={3} width="100%">
+        <Stack
+          direction={isMobile ? "column" : "row"}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Stack pl={!isMobile && 3} width="100%">
             <Box
               sx={{
                 display: "flex",
@@ -220,7 +232,7 @@ export default function ProductSinglePage() {
                       height: isMobile ? "100%" : 600,
                       objectFit: "fill",
                       width: isMobile ? "100%" : 420,
-                      ml: 5,
+                      ml: !isMobile && 5,
                     }}
                   />
                 )}

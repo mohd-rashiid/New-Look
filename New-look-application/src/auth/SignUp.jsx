@@ -88,6 +88,7 @@ export default function SignUpPage() {
         width: "100%",
         display: "flex",
         overflow: "hidden",
+        px: isMobile && 3,
       }}
     >
       <Stack
@@ -272,27 +273,29 @@ export default function SignUpPage() {
         </Box>
 
         {/* RIGHT IMAGE SECTION - Exactly 50% */}
-        <Box
-          sx={{
-            width: isMobile ? "100%" : "50%",
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "#fff",
-            // overflow: "hidden",
-          }}
-        >
-          <img
-            src={character2}
-            alt="Character"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "fill",
+        {!isMobile && (
+          <Box
+            sx={{
+              width: isMobile ? "100%" : "50%",
+              height: "100vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#fff",
+              // overflow: "hidden",
             }}
-          />
-        </Box>
+          >
+            <img
+              src={character2}
+              alt="Character"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "fill",
+              }}
+            />
+          </Box>
+        )}
       </Stack>
     </Box>
   );
