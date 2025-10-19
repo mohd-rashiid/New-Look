@@ -64,9 +64,9 @@ const ProfileSection = () => {
   return (
     <Stack
       mt={isMobile ? 20 : 25}
-      direction={isMobile && "row"}
-      alignItems={isMobile && "center"}
-      justifyContent={isMobile && "center"}
+      direction={"row"}
+      alignItems={"center"}
+      justifyContent={"center"}
       px={isMobile && 2}
     >
       <Paper
