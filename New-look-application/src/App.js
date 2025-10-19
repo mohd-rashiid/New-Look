@@ -36,7 +36,7 @@ function App() {
             }
           />
           <Route
-            path="/product/:name"
+            path="/product/:id"
             element={
               <>
                 <Header />

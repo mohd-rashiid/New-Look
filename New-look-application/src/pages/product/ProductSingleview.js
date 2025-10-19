@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Container,
-  Grid,
   Typography,
   Button,
   Rating,
@@ -18,7 +17,9 @@ import {
   Tab,
   useTheme,
   useMediaQuery,
+  Skeleton,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 import {
   FavoriteBorder,
@@ -38,11 +39,13 @@ function TabPanel({ children, value, index }) {
 }
 
 export default function ProductSinglePage() {
+  const { id } = useParams();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState("6");
+  const [singleProduct, setSingleProduct] = useState("");
 
   const [allProducts, setAllProducts] = useState();
   const [productLoading, setProductLoading] = useState(true);
@@ -54,7 +57,6 @@ export default function ProductSinglePage() {
   ];
 
   const sizes = ["6", "8", "10", "9", "10", "12", "14", "16", "18", "20", "22"];
-  const colors = ["Black", "Grey", "Navy", "Brown"];
 
   const [tabValue, setTabValue] = useState(0);
 
@@ -75,6 +77,13 @@ export default function ProductSinglePage() {
         setProductLoading(false);
       });
   }, []); // Empty array = run only once
+
+  useEffect(() => {
+    const product = allProducts?.find((p) => p?.id === Number(id));
+    setSingleProduct(product);
+  }, [id, allProducts]);
+
+  console.log(allProducts);
 
   const categories = [
     "Black Loungewear",
@@ -98,8 +107,12 @@ export default function ProductSinglePage() {
     "Product Code: 899545603",
   ];
 
+  const rating = singleProduct?.rating?.rate;
+  const count = singleProduct?.rating?.count;
+  // const price = singleProduct?.price;
+  console.log(singleProduct);
   return (
-    <Box sx={{ bgcolor: "", minHeight: "100vh", py: 0, mt: 25 }}>
+    <Box sx={{ bgcolor: "", minHeight: "100vh", py: 0, mt: 25, px: 0 }}>
       <Container maxWidth="xl">
         {/* Breadcrumbs */}
         <Breadcrumbs
@@ -120,29 +133,24 @@ export default function ProductSinglePage() {
             href="/women-cloth"
             sx={{ "&:hover": { color: "text.primary" } }}
           >
-            Women Cloth
+            {/* Women Cloth */}
+            {singleProduct?.category}
           </Link>
-          <Link
+          {/* <Link
             underline="hover"
             color="text.secondary"
             href="/dresses"
             sx={{ "&:hover": { color: "text.primary" } }}
           >
             Dresses
-          </Link>
+          </Link> */}
           <Typography color="text.primary" fontSize="0.875rem">
-            Camel Cuffed Joggers
+            {singleProduct?.title}
           </Typography>
         </Breadcrumbs>
         {/* Main Grid - Image section is larger */}
-        <Grid
-          container
-          spacing={4}
-          width={"100%"}
-          direction={"row"}
-          justifyContent={"space-evenly"}
-        >
-          <Grid item xs={12} lg={7}>
+        <Stack direction="row" alignItems="center" justifyContent="center">
+          <Stack pl={3} width="100%">
             <Box
               sx={{
                 display: "flex",
@@ -162,13 +170,13 @@ export default function ProductSinglePage() {
                 }}
                 justifyContent={"space-evenly"}
               >
-                {images.map((img, idx) => (
+                {images?.map((img, idx) => (
                   <Card
                     key={idx}
                     elevation={0}
                     sx={{
-                      width: 196,
-                      height: isMobile ? 170 : 183,
+                      width: 170,
+                      height: isMobile ? 170 : 160,
                       cursor: "pointer",
                       border:
                         selectedImage === idx
@@ -195,22 +203,33 @@ export default function ProductSinglePage() {
 
               {/* Main Image */}
               <Card elevation={0} sx={{ flex: 1, overflow: "hidden" }}>
-                <CardMedia
-                  component="img"
-                  image={images[selectedImage]}
-                  alt="Main product view"
-                  sx={{
-                    height: isMobile ? "100%" : 665,
-                    objectFit: "cover",
-                    width: isMobile ? "100%" : 526,
-                  }}
-                />
+                {productLoading ? (
+                  <Skeleton
+                    variant="rectangular"
+                    height={600}
+                    width="420px"
+                    sx={{ borderRadius: 2, mb: 2 }}
+                  />
+                ) : (
+                  <CardMedia
+                    component="img"
+                    // image={images[selectedImage]}
+                    image={singleProduct?.image}
+                    alt="Main product view"
+                    sx={{
+                      height: isMobile ? "100%" : 600,
+                      objectFit: "fill",
+                      width: isMobile ? "100%" : 420,
+                      ml: 5,
+                    }}
+                  />
+                )}
               </Card>
             </Box>
-          </Grid>
+          </Stack>
 
           {/* Right Side - Product Details - Exactly 50% */}
-          <Grid item xs={12} lg={6}>
+          <Stack item xs={12} lg={5} width="100%">
             <Box>
               {/* Product Title */}
               <Typography
@@ -218,16 +237,20 @@ export default function ProductSinglePage() {
                 component="h1"
                 sx={{ fontWeight: 600, mb: 2, lineHeight: 1.3 }}
               >
-                Grey Acid Wash Wide Leg Jogger
+                {singleProduct?.title}
               </Typography>
-
               {/* Rating */}
               <Box
                 sx={{ display: "flex", alignItems: "center", gap: 1, mb: 3 }}
               >
-                <Rating value={4.5} precision={0.5} readOnly size="small" />
+                <Rating
+                  value={Number(rating)}
+                  precision={0.5}
+                  readOnly
+                  size="small"
+                />
                 <Typography variant="body2" color="text.secondary">
-                  4.5 (212 reviews)
+                  {rating} ({count} reviews)
                 </Typography>
               </Box>
               {/* Price & Wishlist */}
@@ -237,7 +260,7 @@ export default function ProductSinglePage() {
                   component="span"
                   sx={{ fontWeight: 700, mr: 2 }}
                 >
-                  $ 215.00
+                  $ {singleProduct?.price}
                 </Typography>
                 <Typography
                   variant="h5"
@@ -248,7 +271,7 @@ export default function ProductSinglePage() {
                     fontWeight: 400,
                   }}
                 >
-                  $ 290.00
+                  $ {singleProduct?.price + 50}
                 </Typography>
                 <Box
                   sx={{
@@ -435,7 +458,6 @@ export default function ProductSinglePage() {
                   <Typography textAlign={"center"}>Find in store</Typography>
                 </Stack>
               </Stack>
-
               {/* Shipping Info */}
               <Paper
                 elevation={0}
@@ -560,8 +582,8 @@ export default function ProductSinglePage() {
                 </Stack>
               </Box>
             </Box>
-          </Grid>
-        </Grid>
+          </Stack>
+        </Stack>
       </Container>
 
       {/* productdetails */}
@@ -614,18 +636,10 @@ export default function ProductSinglePage() {
                 sx={{ mb: 2, lineHeight: 1.8 }}
                 textAlign="start"
               >
-                Step into a realm of unparalleled off-duty style with these grey
-                acid wash joggers that effortlessly marry fashion with comfort.
-                Crafted for those committed to style even on their days off,
-                these joggers feature a chic drawstring waist and a wide leg
-                cut. The distinctive acid wash adds a touch of urban edge,
-                making these joggers a versatile choice for leisurely pursuits
-                and relaxed outings. Elevate your casual wardrobe with the
-                perfect blend of fashion-forward design and comfort-driven
-                details, redefining off-duty elegance with every step.
+                {singleProduct?.description}
               </Typography>
 
-              <Typography
+              {/* <Typography
                 variant="body1"
                 color="text.secondary"
                 sx={{ mb: 3, lineHeight: 1.8 }}
@@ -640,7 +654,8 @@ export default function ProductSinglePage() {
                 and relaxed outings. Elevate your casual wardrobe with the
                 perfect blend of fashion-forward design and comfort-driven
                 details, redefining off-duty elegance with every step.
-              </Typography>
+              </Typography> */}
+
               {/* Product Features List */}
               <Box component="ul" sx={{ pl: 2, color: "text.secondary" }}>
                 {productFeatures.map((feature, index) => (
@@ -668,7 +683,6 @@ export default function ProductSinglePage() {
               Care guide information will be displayed here...
             </Typography>
           </TabPanel>
-
           {/* Reviews Tab */}
           <TabPanel value={tabValue} index={2}>
             <Typography

@@ -15,11 +15,17 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 function ProdCard({ allProducts }) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const handleTextLength = isMobile ? 25 : 35;
+
+  const navigateTo = (id) => {
+    navigate(`/product/${id}`);
+  };
 
   return (
     <Box sx={{ p: isMobile ? 0 : 3 }}>
@@ -34,6 +40,7 @@ function ProdCard({ allProducts }) {
             textAlign="center"
           >
             <Card
+              onClick={() => navigateTo(product?.id)}
               sx={{
                 cursor: "pointer",
                 width: isMobile ? 150 : 260,
