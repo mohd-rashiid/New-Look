@@ -5,10 +5,11 @@ import LoginPage from "./auth/Login";
 import SignUpPage from "./auth/SignUp";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
-import ProductSinglePage from "./pages/product/ProductSingleview";
+// import ProductSinglePage from "./pages/product/ProductSingleview";
 import PublicRoute from "./auth/PublicRouter";
 import ProfileSection from "./pages/profile/profile";
 import PrivateRoute from "./auth/PriveteRouter";
+import ProductSinglePage from "./pages/product/singleProduct/ProductSingleview";
 
 function App() {
   return (

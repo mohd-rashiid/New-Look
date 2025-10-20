@@ -26,9 +26,10 @@ import {
   ShoppingCart,
   NavigateNext,
 } from "@mui/icons-material";
-import locationIcon from "../../assets/location.png";
-import downArrow from "../../assets/down-arrow.png";
-import ProductSingleCard from "./ProductSingleCard";
+import locationIcon from "../../../assets/location.png";
+import downArrow from "../../../assets/down-arrow.png";
+import ProductSingleCard from "../components/ProductSingleCard";
+// import ProductSingleCard from "../singleProduct/ProductSingleCard";
 
 function TabPanel({ children, value, index }) {
   return (
