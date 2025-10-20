@@ -28,7 +28,7 @@ import {
 } from "@mui/icons-material";
 import locationIcon from "../../assets/location.png";
 import downArrow from "../../assets/down-arrow.png";
-import ProdCard from "./ProdCard";
+import ProductSingleCard from "./ProductSingleCard";
 
 function TabPanel({ children, value, index }) {
   return (
@@ -750,7 +750,7 @@ export default function ProductSinglePage() {
           >
             Related Product
           </Typography>
-          <ProdCard allProducts={allProducts?.slice(0, 5)} />
+          <ProductSingleCard allProducts={allProducts?.slice(0, 5)} />
         </Stack>
       </Container>
     </Box>

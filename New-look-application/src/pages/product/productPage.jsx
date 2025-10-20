@@ -12,7 +12,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import ProdCard from "./ProdCard";
+import ProductSingleCard from "./ProductSingleCard";
 
 const ProductGrid = () => {
   // Sample product data
@@ -224,7 +224,7 @@ const ProductGrid = () => {
         loadingComp
       ) : (
         <Stack pl={isMobile && 3}>
-          <ProdCard
+          <ProductSingleCard
             allProducts={
               search || selectedCategory ? filteredProducts : allProducts
             }

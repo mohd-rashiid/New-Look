@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import Products from "./pages/product/allProducts";
+import Products from "./pages/product/allProductList";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./auth/Login";
 import SignUpPage from "./auth/SignUp";

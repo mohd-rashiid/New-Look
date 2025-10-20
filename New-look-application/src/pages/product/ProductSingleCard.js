@@ -17,7 +17,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-function ProdCard({ allProducts }) {
+function ProductSingleCard({ allProducts }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -211,8 +211,8 @@ function ProdCard({ allProducts }) {
   );
 }
 
-export default ProdCard;
+export default ProductSingleCard;
 
-ProdCard.propTypes = {
+ProductSingleCard.propTypes = {
   allProducts: PropTypes.any,
 };
