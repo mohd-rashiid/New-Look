@@ -36,6 +36,8 @@ const ProfileSection = () => {
     navigate("/products");
   };
 
+  console.log(userData);
+
   const convertFirestoreTimestamp = (timestamp) => {
     if (
       !timestamp ||
@@ -97,11 +99,12 @@ const ProfileSection = () => {
         </Stack>
 
         <Divider sx={{ my: 2 }} />
-
-        <Typography variant="body2" color="text.secondary">
-          <strong>Joined:</strong>{" "}
-          {convertFirestoreTimestamp(userData?.createdAt)}
-        </Typography>
+        {userData?.createdAt && (
+          <Typography variant="body2" color="text.secondary">
+            <strong>Joined:</strong>{" "}
+            {convertFirestoreTimestamp(userData?.createdAt)}
+          </Typography>
+        )}
 
         <Stack direction="row" spacing={2} pt={1}>
           <Button
