@@ -751,7 +751,9 @@ export default function ProductSinglePage() {
           >
             Related Product
           </Typography>
-          <ProductSingleCard allProducts={allProducts?.slice(0, 5)} />
+          <Stack direction="row" alignItems="center" justifyContent="center">
+            <ProductSingleCard allProducts={allProducts?.slice(0, 5)} />
+          </Stack>
         </Stack>
       </Container>
     </Box>
