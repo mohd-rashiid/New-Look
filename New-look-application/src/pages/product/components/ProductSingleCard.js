@@ -29,7 +29,7 @@ function ProductSingleCard({ allProducts }) {
 
   return (
     <Box sx={{ p: isMobile ? 0 : 3 }}>
-      <Grid container spacing={isMobile ? 3 : 0}>
+      <Grid container spacing={isMobile ? 2 : 0}>
         {allProducts?.map((product) => (
           <Grid
             pl={isMobile ? 0.5 : 0}
