@@ -12,60 +12,6 @@ import PrivateRoute from "./auth/PriveteRouter";
 
 function App() {
   return (
-    // <Container maxWidth="xl" sx={{ textAlign: "center", mt: 5 }}>
-    // <Stack>
-    //   <BrowserRouter>
-    //     <Routes>
-    //       <Route
-    //         path="/profile"
-    //         element={
-    //           <>
-    //             <Header />
-    //             <ProfileSection />
-    //             <Footer />
-    //           </>
-    //         }
-    //       />
-    //       <Route
-    //         path="/products"
-    //         element={
-    //           <>
-    //             <Header />
-    //             <Products />
-    //             <Footer />
-    //           </>
-    //         }
-    //       />
-    //       <Route
-    //         path="/product/:id"
-    //         element={
-    //           <>
-    //             <Header />
-    //             <ProductSinglePage /> <Footer />
-    //           </>
-    //         }
-    //       />
-    //       <Route
-    //         path="/login"
-    //         element={
-    //           <PublicRoute>
-    //             <LoginPage />
-    //           </PublicRoute>
-    //         }
-    //       />
-    //       <Route
-    //         path="/sign-up"
-    //         element={
-    //           <PublicRoute>
-    //             <SignUpPage />
-    //           </PublicRoute>
-    //         }
-    //       />
-    //       {/* catch-all / redirect */}
-    //       <Route path="*" element={<Navigate to="/login" replace />} />
-    //     </Routes>
-    //   </BrowserRouter>
-    // </Stack>
     <Stack>
       <BrowserRouter>
         <Routes>
@@ -129,7 +75,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </Stack>
-    // </Container>
   );
 }
 
