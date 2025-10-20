@@ -8,42 +8,105 @@ import Footer from "./layout/Footer";
 import ProductSinglePage from "./pages/product/ProductSingleview";
 import PublicRoute from "./auth/PublicRouter";
 import ProfileSection from "./pages/profile/profile";
+import PrivateRoute from "./auth/PriveteRouter";
 
 function App() {
   return (
     // <Container maxWidth="xl" sx={{ textAlign: "center", mt: 5 }}>
+    // <Stack>
+    //   <BrowserRouter>
+    //     <Routes>
+    //       <Route
+    //         path="/profile"
+    //         element={
+    //           <>
+    //             <Header />
+    //             <ProfileSection />
+    //             <Footer />
+    //           </>
+    //         }
+    //       />
+    //       <Route
+    //         path="/products"
+    //         element={
+    //           <>
+    //             <Header />
+    //             <Products />
+    //             <Footer />
+    //           </>
+    //         }
+    //       />
+    //       <Route
+    //         path="/product/:id"
+    //         element={
+    //           <>
+    //             <Header />
+    //             <ProductSinglePage /> <Footer />
+    //           </>
+    //         }
+    //       />
+    //       <Route
+    //         path="/login"
+    //         element={
+    //           <PublicRoute>
+    //             <LoginPage />
+    //           </PublicRoute>
+    //         }
+    //       />
+    //       <Route
+    //         path="/sign-up"
+    //         element={
+    //           <PublicRoute>
+    //             <SignUpPage />
+    //           </PublicRoute>
+    //         }
+    //       />
+    //       {/* catch-all / redirect */}
+    //       <Route path="*" element={<Navigate to="/login" replace />} />
+    //     </Routes>
+    //   </BrowserRouter>
+    // </Stack>
     <Stack>
       <BrowserRouter>
         <Routes>
           <Route
             path="/profile"
             element={
-              <>
-                <Header />
-                <ProfileSection />
-                <Footer />
-              </>
+              <PrivateRoute>
+                <>
+                  <Header />
+                  <ProfileSection />
+                  <Footer />
+                </>
+              </PrivateRoute>
             }
           />
           <Route
             path="/products"
             element={
-              <>
-                <Header />
-                <Products />
-                <Footer />
-              </>
+              <PrivateRoute>
+                <>
+                  <Header />
+                  <Products />
+                  <Footer />
+                </>
+              </PrivateRoute>
             }
           />
           <Route
             path="/product/:id"
             element={
-              <>
-                <Header />
-                <ProductSinglePage /> <Footer />
-              </>
+              <PrivateRoute>
+                <>
+                  <Header />
+                  <ProductSinglePage />
+                  <Footer />
+                </>
+              </PrivateRoute>
             }
           />
+
+          {/* Public Routes */}
           <Route
             path="/login"
             element={
@@ -60,7 +123,8 @@ function App() {
               </PublicRoute>
             }
           />
-          {/* catch-all / redirect */}
+
+          {/* catch-all redirect */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
