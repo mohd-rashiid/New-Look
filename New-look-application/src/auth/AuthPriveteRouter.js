@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-const PrivateRoute = ({ children }) => {
+const AuthPrivateRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
 
   if (loading) {
@@ -16,4 +16,4 @@ const PrivateRoute = ({ children }) => {
   return children;
 };
 
-export default PrivateRoute;
+export default AuthPrivateRoute;

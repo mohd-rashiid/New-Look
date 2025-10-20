@@ -5,11 +5,10 @@ import LoginPage from "./auth/Login";
 import SignUpPage from "./auth/SignUp";
 import Header from "./layout/Header";
 import Footer from "./layout/Footer";
-// import ProductSinglePage from "./pages/product/ProductSingleview";
-import PublicRoute from "./auth/PublicRouter";
+import AuthPublicRoute from "./auth/AuthPublicRouter";
 import ProfileSection from "./pages/profile/profile";
-import PrivateRoute from "./auth/PriveteRouter";
 import ProductSinglePage from "./pages/product/singleProduct/ProductSingleview";
+import AuthPrivateRoute from "./auth/AuthPriveteRouter";
 
 function App() {
   return (
@@ -19,37 +18,37 @@ function App() {
           <Route
             path="/profile"
             element={
-              <PrivateRoute>
+              <AuthPrivateRoute>
                 <>
                   <Header />
                   <ProfileSection />
                   <Footer />
                 </>
-              </PrivateRoute>
+              </AuthPrivateRoute>
             }
           />
           <Route
             path="/products"
             element={
-              <PrivateRoute>
+              <AuthPrivateRoute>
                 <>
                   <Header />
                   <Products />
                   <Footer />
                 </>
-              </PrivateRoute>
+              </AuthPrivateRoute>
             }
           />
           <Route
             path="/product/:id"
             element={
-              <PrivateRoute>
+              <AuthPrivateRoute>
                 <>
                   <Header />
                   <ProductSinglePage />
                   <Footer />
                 </>
-              </PrivateRoute>
+              </AuthPrivateRoute>
             }
           />
 
@@ -57,17 +56,17 @@ function App() {
           <Route
             path="/login"
             element={
-              <PublicRoute>
+              <AuthPublicRoute>
                 <LoginPage />
-              </PublicRoute>
+              </AuthPublicRoute>
             }
           />
           <Route
             path="/sign-up"
             element={
-              <PublicRoute>
+              <AuthPublicRoute>
                 <SignUpPage />
-              </PublicRoute>
+              </AuthPublicRoute>
             }
           />
 
