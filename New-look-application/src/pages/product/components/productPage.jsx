@@ -78,20 +78,47 @@ const ProductGrid = () => {
   }, []); // Empty array = run only once
 
   const loadingComp = isMobile ? (
-    <Stack direction="row" spacing={2}>
-      <Skeleton
-        variant="rectangular"
-        height={200}
-        width="150px"
-        sx={{ borderRadius: 2, mb: 4 }}
-      />
-      <Skeleton
-        variant="rectangular"
-        height={200}
-        width="150px"
-        sx={{ borderRadius: 2, mb: 4 }}
-      />
-    </Stack>
+    <>
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Skeleton
+          variant="rectangular"
+          height={200}
+          width="150px"
+          sx={{ borderRadius: 2, mb: 4 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          height={200}
+          width="150px"
+          sx={{ borderRadius: 2, mb: 4 }}
+        />
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        mt={1}
+      >
+        <Skeleton
+          variant="rectangular"
+          height={200}
+          width="150px"
+          sx={{ borderRadius: 2, mb: 4 }}
+        />
+        <Skeleton
+          variant="rectangular"
+          height={200}
+          width="150px"
+          sx={{ borderRadius: 2, mb: 4 }}
+        />
+      </Stack>
+    </>
   ) : (
     <>
       <Stack
