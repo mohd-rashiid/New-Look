@@ -126,17 +126,18 @@ function Header() {
               alignItems="center"
               justifyContent="space-between"
             >
-              <CardMedia
-                component="img"
-                src={logoMob}
-                height="auto"
-                //   width={10}
-                sx={{
-                  objectFit: "contain",
-                  width: "auto",
-                }}
-              />
-
+              <Link href="/products">
+                <CardMedia
+                  component="img"
+                  src={logoMob}
+                  height="auto"
+                  //   width={10}
+                  sx={{
+                    objectFit: "contain",
+                    width: "auto",
+                  }}
+                />
+              </Link>
               {/* Right side icons */}
               <Stack direction="row" spacing={2} alignItems="center">
                 {headerIcons?.map((image) => (
@@ -215,16 +216,18 @@ function Header() {
               </Stack>
 
               {/* Center Brand Name */}
-              <CardMedia
-                component="img"
-                src={logo}
-                height={48}
-                //   width={10}
-                sx={{
-                  objectFit: "contain",
-                  width: "230px",
-                }}
-              />
+              <Link href="/products">
+                <CardMedia
+                  component="img"
+                  src={logo}
+                  height={48}
+                  //   width={10}
+                  sx={{
+                    objectFit: "contain",
+                    width: "230px",
+                  }}
+                />
+              </Link>
 
               {/* Right side icons */}
               <Stack direction="row" spacing={3} alignItems="center">
