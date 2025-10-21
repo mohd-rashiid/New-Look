@@ -751,7 +751,11 @@ export default function ProductSinglePage() {
           >
             Related Product
           </Typography>
-          <Stack direction="row" alignItems="center" justifyContent="center">
+          <Stack
+            direction={isMobile && "row"}
+            alignItems={isMobile && "center"}
+            justifyContent={isMobile && "center"}
+          >
             <ProductSingleCard allProducts={allProducts?.slice(0, 5)} />
           </Stack>
         </Stack>
