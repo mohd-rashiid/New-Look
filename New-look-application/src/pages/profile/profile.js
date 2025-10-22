@@ -2,24 +2,24 @@ import React, { startTransition } from "react";
 import {
   Box,
   Typography,
-  Paper,
-  Avatar,
-  Divider,
   Stack,
   Button,
   useTheme,
   useMediaQuery,
+  Grid,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useShop } from "../../contexts/ShopContext";
 
 const ProfileSection = () => {
   const { logout, userData } = useAuth();
+  const { cartItems, wishlistItems } = useShop();
   const navigate = useNavigate();
-  const imageUrl = "";
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const allProducts = JSON.parse(localStorage.getItem("allProducts")) || [];
 
   const handleLogout = async () => {
     try {
@@ -71,64 +71,84 @@ const ProfileSection = () => {
       justifyContent={"center"}
       px={isMobile && 2}
     >
-      <Paper
-        elevation={3}
+      <Box
         sx={{
-          p: 3,
-          width: isMobile ? "410px" : 420,
-          // mx: "auto",
-          borderRadius: 3,
-          background: "linear-gradient(to right, #f5f7fa, #c3cfe2)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#fff",
+          color: "#000",
         }}
       >
-        <Stack direction="row" spacing={2} alignItems="center">
-          <Avatar
-            src=""
-            sx={{ width: 64, height: 64, bgcolor: "primary.main" }}
-          >
-            {!imageUrl && <PersonIcon fontSize="large" />}
-          </Avatar>
-          <Box>
-            <Typography variant="h6" fontWeight={600}>
-              {userData?.name}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {userData?.email}
-            </Typography>
-          </Box>
-        </Stack>
-
-        <Divider sx={{ my: 2 }} />
-        {userData?.createdAt && (
-          <Typography variant="body2" color="text.secondary">
-            <strong>Joined:</strong>{" "}
-            {convertFirestoreTimestamp(userData?.createdAt)}
+        <Stack spacing={3} alignItems="center">
+          <AccountCircleIcon sx={{ fontSize: 64 }} />
+          <Typography variant="h6" fontWeight="600">
+            {userData.name}
           </Typography>
-        )}
+          <Typography variant="body2" sx={{ opacity: 0.7 }}>
+            {userData.email}
+          </Typography>
+          <Typography variant="body2">
+            <strong>Joined:</strong>{" "}
+            {convertFirestoreTimestamp(userData.createdAt)}
+          </Typography>
 
-        <Stack direction="row" spacing={2} pt={1}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleBackToProducts}
-            sx={{
-              py: 0,
-            }}
-          >
-            Back to Products
-          </Button>
-          <Button
-            sx={{
-              py: 0,
-            }}
-            variant="outlined"
-            color="error"
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
+          {/* Stats Section */}
+          <Grid container spacing={3} justifyContent="center" sx={{ mt: 2 }}>
+            {[
+              { label: "Products", value: allProducts },
+              { label: "Cart", value: cartItems.length },
+              { label: "Wishlist", value: wishlistItems.length },
+            ].map((item) => (
+              <Grid
+                item
+                key={item.label}
+                sx={{
+                  textAlign: "center",
+                  minWidth: 80,
+                }}
+              >
+                <Typography variant="h6" fontWeight="bold">
+                  {item.value}
+                </Typography>
+                <Typography variant="body2" sx={{ opacity: 0.6 }}>
+                  {item.label}
+                </Typography>
+              </Grid>
+            ))}
+          </Grid>
+
+          {/* Buttons */}
+          <Stack direction="row" spacing={2} mt={2}>
+            <Button
+              variant="contained"
+              sx={{
+                background: "#000",
+                color: "#fff",
+                textTransform: "none",
+                px: 3,
+                "&:hover": { background: "#222" },
+              }}
+              onClick={handleBackToProducts}
+            >
+              Back to Products
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: "#000",
+                color: "#000",
+                textTransform: "none",
+                px: 3,
+                "&:hover": { background: "#f5f5f5" },
+              }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </Stack>
         </Stack>
-      </Paper>
+      </Box>
     </Stack>
   );
 };

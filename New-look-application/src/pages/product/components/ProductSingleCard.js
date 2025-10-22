@@ -12,20 +12,41 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useShop } from "../../../contexts/ShopContext";
 
 function ProductSingleCard({ allProducts }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const handleTextLength = isMobile ? 25 : 35;
+  const { addToCart, addToWishlist, wishlistItems } = useShop();
 
   const navigateTo = (id) => {
     navigate(`/product/${id}`);
   };
+
+  const handleAddToCart = (e, product) => {
+    console.log("product =>", product);
+
+    e.stopPropagation();
+    addToCart(product);
+  };
+
+  const handleAddToWishlist = (e, product) => {
+    e.stopPropagation();
+    addToWishlist(product);
+  };
+
+  const isInWishlist = (productId) => {
+    return wishlistItems.some((item) => item.id === productId);
+  };
+
+  console.log(wishlistItems);
 
   return (
     <Box sx={{ p: isMobile ? 0 : 3 }}>
@@ -76,6 +97,7 @@ function ProductSingleCard({ allProducts }) {
 
                 {/* Favorite Icon */}
                 <IconButton
+                  onClick={(e) => handleAddToWishlist(e, product)}
                   sx={{
                     position: "absolute",
                     top: 15,
@@ -89,7 +111,11 @@ function ProductSingleCard({ allProducts }) {
                     },
                   }}
                 >
-                  <FavoriteBorderIcon sx={{ fontSize: 18, color: "#666" }} />
+                  {isInWishlist(product.id) ? (
+                    <FavoriteIcon sx={{ fontSize: 18, color: "#e91e63" }} />
+                  ) : (
+                    <FavoriteBorderIcon sx={{ fontSize: 18, color: "#666" }} />
+                  )}
                 </IconButton>
 
                 {/* Hover Actions */}
@@ -128,6 +154,7 @@ function ProductSingleCard({ allProducts }) {
                       Quick View
                     </Button>
                     <Button
+                      onClick={(e) => handleAddToCart(e, product)}
                       startIcon={
                         <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />
                       }

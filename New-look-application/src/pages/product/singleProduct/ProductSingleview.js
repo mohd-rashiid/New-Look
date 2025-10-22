@@ -23,12 +23,14 @@ import { useParams } from "react-router-dom";
 
 import {
   FavoriteBorder,
+  Favorite,
   ShoppingCart,
   NavigateNext,
 } from "@mui/icons-material";
 import locationIcon from "../../../assets/location.png";
 import downArrow from "../../../assets/down-arrow.png";
 import ProductSingleCard from "../components/ProductSingleCard";
+import { useShop } from "../../../contexts/ShopContext";
 // import ProductSingleCard from "../singleProduct/ProductSingleCard";
 
 function TabPanel({ children, value, index }) {
@@ -43,6 +45,7 @@ export default function ProductSinglePage() {
   const { id } = useParams();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const { addToCart, addToWishlist, wishlistItems } = useShop();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState("6");
@@ -51,13 +54,15 @@ export default function ProductSinglePage() {
   const [allProducts, setAllProducts] = useState();
   const [productLoading, setProductLoading] = useState(true);
 
-  const images = [
+  const staticImages = [
     "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&q=80",
     "https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=800&q=80",
     "https://images.unsplash.com/photo-1598522325074-042db73aa4e6?w=800&q=80",
   ];
 
-  const sizes = ["6", "8", "10", "9", "10", "12", "14", "16", "18", "20", "22"];
+  const images = [singleProduct?.image, ...staticImages]; // merged array
+
+  const sizes = ["6", "8", "10", "9", "11", "12", "14", "16", "18", "20", "22"];
 
   const [tabValue, setTabValue] = useState(0);
 
@@ -112,6 +117,30 @@ export default function ProductSinglePage() {
   const count = singleProduct?.rating?.count;
   // const price = singleProduct?.price;
   console.log(singleProduct);
+
+  const handleAddToCart = () => {
+    if (singleProduct && selectedSize) {
+      const productWithSize = {
+        ...singleProduct,
+        size: selectedSize,
+      };
+      addToCart(productWithSize);
+    }
+  };
+
+  const handleAddToWishlist = () => {
+    if (singleProduct && selectedSize) {
+      const productWithSize = {
+        ...singleProduct,
+        size: selectedSize,
+      };
+      addToWishlist(productWithSize);
+    }
+  };
+
+  const isInWishlist = (productId) => {
+    return wishlistItems.some((item) => item.id === productId);
+  };
   return (
     <Box
       sx={{
@@ -189,7 +218,7 @@ export default function ProductSinglePage() {
                     elevation={0}
                     sx={{
                       width: 170,
-                      height: isMobile ? 170 : 160,
+                      height: isMobile ? 170 : 135,
                       cursor: "pointer",
                       border:
                         selectedImage === idx
@@ -226,8 +255,7 @@ export default function ProductSinglePage() {
                 ) : (
                   <CardMedia
                     component="img"
-                    // image={images[selectedImage]}
-                    image={singleProduct?.image}
+                    image={images[selectedImage]} // now dynamic                    // image={singleProduct?.image}
                     alt="Main product view"
                     sx={{
                       height: isMobile ? "100%" : 600,
@@ -295,12 +323,17 @@ export default function ProductSinglePage() {
                   }}
                 >
                   <IconButton
+                    onClick={handleAddToWishlist}
                     size="small"
                     sx={{
                       "&:hover": { color: "error.main" },
                     }}
                   >
-                    <FavoriteBorder />
+                    {isInWishlist(singleProduct?.id) ? (
+                      <Favorite sx={{ color: "#e91e63" }} />
+                    ) : (
+                      <FavoriteBorder />
+                    )}
                   </IconButton>
                   <Typography variant="body2">Add to Wish List</Typography>
                 </Box>
@@ -432,6 +465,7 @@ export default function ProductSinglePage() {
                 justifyContent={"space-between"}
               >
                 <Button
+                  onClick={handleAddToCart}
                   variant="contained"
                   startIcon={<ShoppingCart />}
                   sx={{

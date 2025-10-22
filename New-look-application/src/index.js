@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.js";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ShopProvider } from "./contexts/ShopContext";
 
 // const theme = createTheme({
 //   palette: {
@@ -33,8 +34,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <CssBaseline />
-        <App />
+        <ShopProvider>
+          <CssBaseline />
+          <App />
+        </ShopProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>

@@ -77,6 +77,12 @@ const ProductGrid = () => {
       });
   }, []); // Empty array = run only once
 
+  useEffect(() => {
+    if (allProducts?.length > 0) {
+      localStorage.setItem("allProducts", JSON.stringify(allProducts?.length));
+    }
+  }, [allProducts]);
+
   const loadingComp = isMobile ? (
     <>
       <Stack

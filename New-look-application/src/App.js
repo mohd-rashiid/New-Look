@@ -9,6 +9,8 @@ import AuthPublicRoute from "./auth/AuthPublicRouter";
 import ProfileSection from "./pages/profile/profile";
 import ProductSinglePage from "./pages/product/singleProduct/ProductSingleview";
 import AuthPrivateRoute from "./auth/AuthPriveteRouter";
+import WishlistPage from "./pages/wishlist/WishlistPage";
+import CartPage from "./pages/cart/CartPage";
 
 function App() {
   return (
@@ -46,6 +48,32 @@ function App() {
                 <>
                   <Header />
                   <ProductSinglePage />
+                  <Footer />
+                </>
+              </AuthPrivateRoute>
+            }
+          />
+
+          <Route
+            path="/wishlist"
+            element={
+              <AuthPrivateRoute>
+                <>
+                  <Header />
+                  <WishlistPage />
+                  <Footer />
+                </>
+              </AuthPrivateRoute>
+            }
+          />
+
+          <Route
+            path="/cart"
+            element={
+              <AuthPrivateRoute>
+                <>
+                  <Header />
+                  <CartPage />
                   <Footer />
                 </>
               </AuthPrivateRoute>

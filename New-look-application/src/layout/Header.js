@@ -20,15 +20,17 @@ import downArrow from "../assets/down-arrow.png";
 import searchIcon from "../assets/search.png";
 import moreIcon from "../assets/more.png";
 import React, { useState } from "react";
+import { useShop } from "../contexts/ShopContext";
 
 function Header() {
+  const { totals } = useShop();
   const [scrollValue, setScrollValue] = useState();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const headerIcons = [
-    { image: wishlistImg },
-    { image: cartImg },
-    { image: userImg, isLink: true },
+    { image: wishlistImg, href: "/wishlist", showBadge: totals.wishlistCount },
+    { image: cartImg, href: "/cart", showBadge: totals.cartCount },
+    { image: userImg, isLink: true, href: "/profile" },
     isMobile && { image: moreIcon, isMobile: true },
   ].filter(Boolean);
   const subHeaderData = ["Sale", "Womens", "Mens", "Girls", "Christmas"];
@@ -140,31 +142,35 @@ function Header() {
               </Link>
               {/* Right side icons */}
               <Stack direction="row" spacing={2} alignItems="center">
-                {headerIcons?.map((image) => (
-                  <Stack spacing={2}>
-                    {image?.isLink ? (
-                      <Link
-                        href="/profile"
-                        sx={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        <CardMedia
-                          component="img"
-                          src={image?.image}
-                          height={25}
-                          width={25}
-                        />
-                      </Link>
-                    ) : (
+                {headerIcons?.map((icon, idx) => (
+                  <Box key={idx} sx={{ position: "relative" }}>
+                    <Link href={icon.href || "#"} sx={{ cursor: "pointer" }}>
                       <CardMedia
                         component="img"
-                        src={image?.image}
+                        src={icon?.image}
                         height={25}
                         width={25}
                       />
-                    )}
-                  </Stack>
+                    </Link>
+                    {icon.showBadge ? (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: -6,
+                          right: -8,
+                          bgcolor: "#000",
+                          color: "#fff",
+                          borderRadius: "10px",
+                          fontSize: 10,
+                          px: 0.7,
+                          minWidth: 16,
+                          textAlign: "center",
+                        }}
+                      >
+                        {icon.showBadge}
+                      </Box>
+                    ) : null}
+                  </Box>
                 ))}
               </Stack>
             </Stack>
@@ -231,31 +237,35 @@ function Header() {
 
               {/* Right side icons */}
               <Stack direction="row" spacing={3} alignItems="center">
-                {headerIcons?.map((image, k) => (
-                  <Stack spacing={2} key={k}>
-                    {image?.isLink ? (
-                      <Link
-                        href="/profile"
-                        sx={{
-                          cursor: "pointer",
-                        }}
-                      >
-                        <CardMedia
-                          component="img"
-                          src={image?.image}
-                          height={25}
-                          width={25}
-                        />
-                      </Link>
-                    ) : (
+                {headerIcons?.map((icon, k) => (
+                  <Box key={k} sx={{ position: "relative" }}>
+                    <Link href={icon.href || "#"} sx={{ cursor: "pointer" }}>
                       <CardMedia
                         component="img"
-                        src={image?.image}
+                        src={icon?.image}
                         height={25}
                         width={25}
                       />
-                    )}
-                  </Stack>
+                    </Link>
+                    {icon.showBadge ? (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: -8,
+                          right: -10,
+                          bgcolor: "#000",
+                          color: "#fff",
+                          borderRadius: "10px",
+                          fontSize: 12,
+                          px: 0.8,
+                          minWidth: 16,
+                          textAlign: "center",
+                        }}
+                      >
+                        {icon.showBadge}
+                      </Box>
+                    ) : null}
+                  </Box>
                 ))}
               </Stack>
             </Toolbar>
