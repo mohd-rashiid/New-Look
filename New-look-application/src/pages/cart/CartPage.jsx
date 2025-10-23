@@ -12,6 +12,8 @@ import {
   Paper,
   Grid,
   Chip,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import {
   Add,
@@ -26,6 +28,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function CartPage() {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const { cartItems, updateCartQty, removeFromCart, totals, clearCart } =
     useShop();
@@ -45,11 +49,22 @@ export default function CartPage() {
       <Container maxWidth="xl">
         {/* Header Section */}
         <Box sx={{ mb: 4, pt: 2 }}>
-          <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
-            <ShoppingCart sx={{ fontSize: 32, color: "#000" }} />
-            <Typography variant="h4" sx={{ fontWeight: 700, color: "#000" }}>
-              Shopping Cart
-            </Typography>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent={isMobile && "space-between"}
+            spacing={2}
+            sx={{ mb: 2 }}
+          >
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <ShoppingCart sx={{ fontSize: 32, color: "#000" }} />
+              <Typography
+                variant={isMobile ? "h5" : "h4"}
+                sx={{ fontWeight: 700, color: "#000" }}
+              >
+                Shopping Cart
+              </Typography>
+            </Stack>
             <Chip
               label={`${cartItems.reduce((s, i) => s + i.qty, 0)} items`}
               sx={{ bgcolor: "#000", color: "#fff", fontWeight: 600 }}

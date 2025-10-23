@@ -29,7 +29,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <Box sx={{ mt: { xs: 10, md: 22 }, minHeight: "60vh", bgcolor: "#fff" }}>
+    <Box sx={{ mt: { xs: 17, md: 22 }, minHeight: "60vh", bgcolor: "#fff" }}>
       <Container maxWidth="lg">
         <Typography variant="h5" sx={{ mb: 3, fontWeight: 600, color: "#000" }}>
           Wishlist ({wishlistItems.length})

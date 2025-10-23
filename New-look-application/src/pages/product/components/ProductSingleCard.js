@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useShop } from "../../../contexts/ShopContext";
 
-function ProductSingleCard({ allProducts }) {
+function ProductSingleCard({ allProducts, isCategory }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -46,11 +46,15 @@ function ProductSingleCard({ allProducts }) {
     return wishlistItems.some((item) => item.id === productId);
   };
 
-  console.log(wishlistItems);
-
   return (
     <Box sx={{ p: isMobile ? 0 : 3 }}>
-      <Grid container spacing={isMobile ? 1 : 0}>
+      <Grid
+        container
+        spacing={isMobile ? 1 : 0}
+        display={isMobile && "flex"}
+        alignItems={isMobile && "center"}
+        justifyContent={isMobile && "center"}
+      >
         {allProducts?.map((product) => (
           <Grid
             pl={isMobile ? 0.5 : 0}

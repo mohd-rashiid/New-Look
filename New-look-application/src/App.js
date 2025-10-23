@@ -11,6 +11,7 @@ import ProductSinglePage from "./pages/product/singleProduct/ProductSingleview";
 import AuthPrivateRoute from "./auth/AuthPriveteRouter";
 import WishlistPage from "./pages/wishlist/WishlistPage";
 import CartPage from "./pages/cart/CartPage";
+import CategoryPage from "./pages/CategoryList/CategoryPage";
 
 function App() {
   return (
@@ -36,6 +37,18 @@ function App() {
                 <>
                   <Header />
                   <Products />
+                  <Footer />
+                </>
+              </AuthPrivateRoute>
+            }
+          />
+          <Route
+            path="/category/:name"
+            element={
+              <AuthPrivateRoute>
+                <>
+                  <Header />
+                  <CategoryPage />
                   <Footer />
                 </>
               </AuthPrivateRoute>

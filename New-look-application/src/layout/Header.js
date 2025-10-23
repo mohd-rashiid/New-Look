@@ -1,10 +1,15 @@
 import {
   AppBar,
   Box,
+  Button,
   CardMedia,
+  Drawer,
+  IconButton,
   Link,
+  Skeleton,
   Stack,
   Toolbar,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
@@ -16,32 +21,150 @@ import userImg from "../../src/assets/User.png";
 import location from "../assets/location.png";
 import logo from "../assets/logo.png";
 import logoMob from "../assets/logo-mob.png";
-import downArrow from "../assets/down-arrow.png";
 import searchIcon from "../assets/search.png";
 import moreIcon from "../assets/more.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useShop } from "../contexts/ShopContext";
+import { CloseRounded } from "@mui/icons-material";
 
 function Header() {
   const { totals } = useShop();
   const [scrollValue, setScrollValue] = useState();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+
   const headerIcons = [
     { image: wishlistImg, href: "/wishlist", showBadge: totals.wishlistCount },
     { image: cartImg, href: "/cart", showBadge: totals.cartCount },
     { image: userImg, isLink: true, href: "/profile" },
-    isMobile && { image: moreIcon, isMobile: true },
+    isMobile && {
+      image: moreIcon,
+      isMobile: true,
+      onClick: () => setMobileDrawerOpen(true),
+    },
   ].filter(Boolean);
-  const subHeaderData = ["Sale", "Womens", "Mens", "Girls", "Christmas"];
 
   window.addEventListener("scroll", () => {
     const scrollY = window.scrollY;
     setScrollValue(scrollY);
   });
+  const [categories, setCategories] = useState([]);
+  const [categoryLoading, setCategoryLoading] = useState(true);
+  useEffect(() => {
+    // Fetch data when the component mounts
+    fetch("https://fakestoreapi.com/products")
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+        setCategoryLoading(false);
+        const uniqueCategories = Array.from(
+          new Set(data.map((p) => p.category))
+        );
+        setCategories(uniqueCategories);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setCategoryLoading(false);
+      });
+  }, []); // Empty array = run only once
+
+  console.log(categoryLoading);
 
   return (
     <>
+      <Drawer
+        anchor="top"
+        open={mobileDrawerOpen}
+        onClose={() => setMobileDrawerOpen(false)}
+        PaperProps={{
+          sx: {
+            borderBottomLeftRadius: 12,
+            borderBottomRightRadius: 12,
+            boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+            bgcolor: "#fff",
+          },
+        }}
+      >
+        <Box sx={{ px: 3, pt: 17, pb: 4 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{ mb: 2 }}
+          >
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 600, color: "#000", fontSize: "1.1rem" }}
+            >
+              More Options
+            </Typography>
+            <Tooltip title="Close">
+              <IconButton
+                onClick={() => setMobileDrawerOpen(false)}
+                size="small"
+              >
+                <CloseRounded sx={{ fontSize: 22, color: "#555" }} />
+              </IconButton>
+            </Tooltip>
+          </Stack>
+
+          <Stack spacing={2}>
+            <Button
+              href="/wishlist"
+              variant="outlined"
+              fullWidth
+              sx={{
+                borderColor: "#000",
+                color: "#000",
+                textTransform: "none",
+                fontWeight: 500,
+                "&:hover": {
+                  borderColor: "#333",
+                  color: "#333",
+                },
+              }}
+            >
+              Wishlist
+            </Button>
+            <Button
+              href="/cart"
+              variant="outlined"
+              fullWidth
+              sx={{
+                borderColor: "#000",
+                color: "#000",
+                textTransform: "none",
+                fontWeight: 500,
+                "&:hover": {
+                  borderColor: "#333",
+                  color: "#333",
+                },
+              }}
+            >
+              Cart
+            </Button>
+            <Button
+              href="/profile"
+              variant="outlined"
+              fullWidth
+              sx={{
+                borderColor: "#000",
+                color: "#000",
+                textTransform: "none",
+                fontWeight: 500,
+                "&:hover": {
+                  borderColor: "#333",
+                  color: "#333",
+                },
+              }}
+            >
+              Profile
+            </Button>
+          </Stack>
+        </Box>
+      </Drawer>
+
       {isMobile ? (
         <>
           <AppBar
@@ -144,14 +267,19 @@ function Header() {
               <Stack direction="row" spacing={2} alignItems="center">
                 {headerIcons?.map((icon, idx) => (
                   <Box key={idx} sx={{ position: "relative" }}>
-                    <Link href={icon.href || "#"} sx={{ cursor: "pointer" }}>
+                    <Box
+                      onClick={icon.onClick}
+                      sx={{ cursor: "pointer" }}
+                      component={icon.href ? Link : "div"}
+                      href={icon.href || undefined}
+                    >
                       <CardMedia
                         component="img"
                         src={icon?.image}
                         height={25}
                         width={25}
                       />
-                    </Link>
+                    </Box>
                     {icon.showBadge ? (
                       <Box
                         sx={{
@@ -270,7 +398,6 @@ function Header() {
               </Stack>
             </Toolbar>
           </AppBar>
-          {/* <Divider /> */}
 
           <AppBar
             position="fixed"
@@ -295,27 +422,56 @@ function Header() {
                 gap: 5,
               }}
             >
-              {subHeaderData?.map((name, k) => (
-                <Box key={k}>
-                  <Typography
-                    color="#3C3C3C"
-                    fontSize={16}
-                    display="flex"
-                    alignItems="center"
-                  >
-                    {name}
-                    <CardMedia
-                      component="img"
-                      src={downArrow}
-                      height={16}
-                      width={16}
-                      sx={{
-                        pl: 0.3,
-                      }}
-                    />
-                  </Typography>
-                </Box>
-              ))}
+              {categoryLoading ? (
+                <Stack direction="row" spacing={1} pt={1}>
+                  <Skeleton
+                    variant="rectangular"
+                    height={20}
+                    width="120px"
+                    sx={{ borderRadius: 2, mb: 4 }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    height={20}
+                    width="120px"
+                    sx={{ borderRadius: 2, mb: 4 }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    height={20}
+                    width="120px"
+                    sx={{ borderRadius: 2, mb: 4 }}
+                  />
+                  <Skeleton
+                    variant="rectangular"
+                    height={20}
+                    width="120px"
+                    sx={{ borderRadius: 2, mb: 4 }}
+                  />
+                </Stack>
+              ) : (
+                <>
+                  {categories?.map((name, k) => (
+                    <Box key={k}>
+                      <Link href={`/category/${name}`}>
+                        <Typography
+                          color="#3C3C3C"
+                          fontSize={16}
+                          display="flex"
+                          alignItems="center"
+                          sx={{
+                            textTransform: "capitalize",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {name}
+                        </Typography>
+                      </Link>
+                    </Box>
+                  ))}
+                </>
+              )}
+
               <Stack>
                 <CardMedia
                   component="img"

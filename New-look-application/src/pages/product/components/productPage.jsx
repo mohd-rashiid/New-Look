@@ -236,7 +236,7 @@ const ProductGrid = () => {
           </Select>
         </FormControl>
       </Stack>
-      <Box sx={{ mb: 3 }}>
+      <Box sx={{ mb: 3, py: isMobile && 2, pl: isMobile && 2 }}>
         {search && (
           <Typography
             sx={{
@@ -256,7 +256,7 @@ const ProductGrid = () => {
       {productLoading ? (
         loadingComp
       ) : (
-        <Stack pl={isMobile && 3}>
+        <Stack pl={isMobile && 0}>
           <ProductSingleCard
             allProducts={
               search || selectedCategory ? filteredProducts : allProducts
